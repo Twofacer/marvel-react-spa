@@ -1,35 +1,38 @@
+
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Spinner from '../spinner/Spinner';
-import {lazy, Suspense} from 'react';
 import AppHeader from "../appHeader/AppHeader";
-const Page404 = lazy(() => import('../pages/404'));
-const MainPage = lazy(() => import('../pages/MainPage'));
-const ComicsPage = lazy(() => import('../pages/ComicsPage'));
-const SingleComicPage = lazy(() => import('../pages/SingleComicPage'));
+import ComicsPage from "../pages/ComicsPage";
+import MainPage from "../pages/MainPage";
+import SingleComicPage from "../pages/SingleComicPage";
+import SingleCharacterPage from "../pages/SingleCharacterPage";
+import decoration from '../../resources/img/vision.png';
+import Page404 from "../pages/404";
+import SinglePage from "../pages/SinglePage";
 const App = () => {
-    
-    return (
-        <Router>
-            <div className="app">
-                <AppHeader/>
-                <main>
-                <Suspense fallback={<Spinner/>}>
-                <Routes>
+   
+        return (
+            <Router>
+                <div className="app">
+                    <AppHeader/>
+                    <main>
+                            <Routes>
+                           
                                 <Route exact path="/comics" element={<ComicsPage/>}>
                                 </Route>
-                                <Route exact path="/comics/:id" element={<SingleComicPage></SingleComicPage>} >
+                                <Route exact path="/comics/:id" element={ <SinglePage Component={SingleComicPage} dataType='comic'/>} >
                                  
                                 </Route>
-                               
+                                <Route exact path="/characters/:id" element={<SinglePage Component={SingleCharacterPage} dataType='character'/>} >
+                                  
+                                </Route>
                                 <Route path="/" element={<MainPage/>}></Route>
                                 <Route path="*"element={<Page404/>}></Route>
                             </Routes>
-                            </Suspense>
-                </main>
-                
-            </div>
-        </Router>
-    )
+                        <img className="bg-decoration" src={decoration} alt="vision"/>
+                    </main>
+                 </div>
+            </Router>
+        )
 }
 
 export default App;
